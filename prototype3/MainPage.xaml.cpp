@@ -85,7 +85,7 @@ void prototype3::MainPage::UrlContainer_KeyDown(Platform::Object^ sender, Window
 {
 	if (e->Key == Windows::System::VirtualKey::Enter) {
 		int i = 1;
-		i = b.isValidUrl(urlContainer->Text);
+ 		i = b.isValidUrl(urlContainer->Text);
 		if (i == 1) {
 			auto urlToLoad = ref new Windows::Foundation::Uri(urlContainer->Text);
 			b.loadUrlDirect(outputBox, urlToLoad);
@@ -93,7 +93,7 @@ void prototype3::MainPage::UrlContainer_KeyDown(Platform::Object^ sender, Window
 		else if (i == 0) {
 			b.loadUrlSearch(outputBox, urlContainer->Text);
 		}
-		else if (i == 55) {
+		else if (i == -1) {
 			auto urlToSearch = ref new Windows::Foundation::Uri("http://" + urlContainer->Text);
 			b.loadUrlDirect(outputBox, urlToSearch);
 		}

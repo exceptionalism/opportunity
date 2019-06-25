@@ -56,32 +56,37 @@ void Browser::loadUrlSearch(Windows::UI::Xaml::Controls::WebView^ webView, Platf
 }
 int Browser::isValidUrl(Platform::String^ urlString) {
 	std::wstring fooW(urlString->Begin());
+	
 	std::string fooA(fooW.begin(), fooW.end());
-	std::string d = "fg";
-	const char* charStr = fooA.c_str();
-	char* toCheck = (char*)d.c_str();
+	std::string d = "";
+
+	std::string::iterator it1 = fooA.begin();
+	
 	bool hasProtocol = false;
-	int i = 0;
-	if (charStr[i + 0] == 'h' && charStr[i + 1] == 't' && charStr[i + 2] == 't' && charStr[i + 3] == 'p' && charStr[i + 4] == 's' && charStr[i + 5] == ':' && charStr[i + 6] == '/' && charStr[i + 7] == '/') {
-		i = 8;
-		hasProtocol = true;
-	}
-	else if (charStr[i + 0] == 'h' && charStr[i + 1] == 't' && charStr[i + 2] == 't' && charStr[i + 3] == 'p' && charStr[i + 4] == ':' && charStr[i + 5] == '/' && charStr[i + 6] == '/') {
-		i = 7;
-		hasProtocol = true;
-	}
 	int j = 0;
-	while (charStr[i] != '/' && i < strlen(charStr)) {
-		toCheck[j] = charStr[i];
-		i++;
-		j++;
+	
+	// check if protocol is present
+	if (*it1 == 'h' && *(it1 + 1) == 't' && *(it1 + 2) == 't' && *(it1 + 3) == 'p' && *(it1 + 4) == 's' && *(it1 + 5) == ':' && *(it1 + 6) == '/' && *(it1 + 7) == '/') {
+		it1 += 8;
+		hasProtocol = true;
+	} else if (*it1 == 'h' && *(it1 + 1) == 't' && *(it1 + 2) == 't' && *(it1 + 3) == 'p' && *(it1 + 4) == ':' && *(it1 + 5) == '/' && *(it1 + 6) == '/') {
+		it1 += 7;
+		hasProtocol = true;
 	}
-	i = 1;
-	while (i < j) {
-		if (toCheck[i] == '.') {
-			return hasProtocol ? 1 : 55;
-		}
-		i++;
+	std::string::iterator x = fooA.end();
+
+	// create new string of only domain and extension
+	while (it1 < x && *it1 != '/') {
+		d.push_back(*it1);
+		it1++;
+	}
+
+	// check if the new string is a valid url
+	it1 = d.begin();
+	while (it1 != d.end()) {
+		if (*it1 == '.')
+			return hasProtocol ? 1 : -1;
+		it1++;
 	}
 	return 0;
 }
