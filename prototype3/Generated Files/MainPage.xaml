@@ -51,7 +51,7 @@
             Width="1366" Height="726"
             Margin="0, 42, 0, 0"
             VerticalAlignment="Top"
-            Source="https://google.com"
+            Source="http://localhost/phpmyadmin"
             DefaultBackgroundColor="White"
             x:Name="outputBox"
                                                              

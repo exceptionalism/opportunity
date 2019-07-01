@@ -5,6 +5,7 @@ private:
 	int i;
 	Platform::String^ history[100];
 public:
+	int saveFile(Platform::String^);
 	bool directLoading;
 	Browser();//done
 	bool hasPreviousUrl(); //done

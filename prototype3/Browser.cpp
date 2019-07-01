@@ -2,13 +2,39 @@
 #include "Browser.h"
 #include "string.h"
 
+using namespace concurrency;
+using namespace Windows::Storage;
+
 Browser::Browser() {
 	i = 0;
 	history[i] = "https://google.com";
 	directLoading = true;
+	//saveFile();
 }
 Browser::~Browser()
 {
+	//saveFile();
+}
+int Browser::saveFile(Platform::String^ toSave) {
+	auto createFileTask = create_task(DownloadsFolder::CreateFileAsync(L"file.txt", CreationCollisionOption::OpenIfExists));
+	createFileTask.then([&](StorageFile^ newFile)
+		{
+			create_task(FileIO::WriteTextAsync(newFile, toSave));
+		});
+
+
+	//StorageFolder^ storageFolder = ApplicationData::Current->LocalFolder;
+	//concurrency::create_task(storageFolder->CreateFileAsync("sample.txt", CreationCollisionOption::ReplaceExisting));
+	//create_task(storageFolder->GetFileAsync("sample.txt")).then([&](StorageFile^ sampleFile) {
+		//int j = 0;
+		// Process file
+		/*while (j < i) {
+			create_task(FileIO::AppendTextAsync(sampleFile, history[j]));
+			j++;
+		}*/
+		//create_task(FileIO::WriteTextAsync(sampleFile, toSave));
+	//});
+	return 0;
 }
 bool Browser::hasPreviousUrl() {
 	return i == 0 ? false : true;
@@ -20,6 +46,7 @@ Platform::String^ Browser::getPreviousUrl() {
 void Browser::setHistory(Platform::String^ urlToSave) {
 	i++;
 	history[i] = urlToSave;
+	saveFile(urlToSave);
 }
 void Browser::loadUrlDirect(Windows::UI::Xaml::Controls::WebView^ webView, Windows::Foundation::Uri^ urlToLoad) {
 	setHistory(urlToLoad->ToString());
