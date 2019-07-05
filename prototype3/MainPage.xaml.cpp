@@ -95,7 +95,7 @@ void prototype3::MainPage::UrlContainer_KeyDown(Platform::Object^ sender, Window
 		}
 		else if (i == -1) {
 			auto urlToSearch = ref new Windows::Foundation::Uri("http://" + urlContainer->Text);
-			b.loadUrlDirect(outputBox, urlToSearch);
+			b.loadUrlSearch(outputBox, urlContainer->Text);
 		}
 	}
 }

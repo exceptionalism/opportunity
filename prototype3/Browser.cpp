@@ -16,11 +16,11 @@ Browser::~Browser()
 	//saveFile();
 }
 int Browser::saveFile(Platform::String^ toSave) {
-	auto createFileTask = create_task(DownloadsFolder::CreateFileAsync(L"file.txt", CreationCollisionOption::OpenIfExists));
+	/*auto createFileTask = create_task(DownloadsFolder::CreateFileAsync(L"file.txt", CreationCollisionOption::OpenIfExists));
 	createFileTask.then([&](StorageFile^ newFile)
 		{
 			create_task(FileIO::WriteTextAsync(newFile, toSave));
-		});
+		});*/
 
 
 	//StorageFolder^ storageFolder = ApplicationData::Current->LocalFolder;
@@ -70,9 +70,9 @@ void Browser::loadPrevUrl(Windows::UI::Xaml::Controls::WebView^ webView, Windows
 	}
 }
 void Browser::loadUrlSearch(Windows::UI::Xaml::Controls::WebView^ webView, Platform::String^ toSearch) {
-	setHistory(toSearch);
 	directLoading = true;
 	auto searchUrl = ref new Windows::Foundation::Uri("https://google.com/search?q=" + toSearch);
+	setHistory(searchUrl->ToString());
 	try {
 		webView->Navigate(searchUrl);
 	}
