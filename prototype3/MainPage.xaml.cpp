@@ -94,8 +94,8 @@ void prototype3::MainPage::UrlContainer_KeyDown(Platform::Object^ sender, Window
 			b.loadUrlSearch(outputBox, urlContainer->Text);
 		}
 		else if (i == -1) {
-			auto urlToSearch = ref new Windows::Foundation::Uri("http://" + urlContainer->Text);
-			b.loadUrlSearch(outputBox, urlContainer->Text);
+			auto urlToGo = ref new Windows::Foundation::Uri(urlContainer->Text);
+			b.loadUrlDirect(outputBox, urlToGo);
 		}
 	}
 }

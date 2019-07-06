@@ -48,10 +48,10 @@
             Visibility="Collapsed"
             />
         <WebView x:ConnectionId='6'
-            Width="1366" Height="726"
+            Width="1366" Height="666"
             Margin="0, 42, 0, 0"
             VerticalAlignment="Top"
-            Source="http://localhost/phpmyadmin"
+            Source="https://google.com"
             DefaultBackgroundColor="White"
             x:Name="outputBox"
                                                              
