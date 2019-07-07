@@ -5,8 +5,12 @@ private:
 	int i;
 	Platform::String^ history[100];
 public:
-	int saveFile(Platform::String^);
+	Platform::String^ currentAddress;
 	bool directLoading;
+	bool navigationHasFailed;
+	bool isReloading;
+
+	int saveFile(Platform::String^);
 	Browser();//done
 	bool hasPreviousUrl(); //done
 	Platform::String^ getPreviousUrl(); //done

@@ -19,6 +19,8 @@ using namespace Windows::UI::Xaml::Data;
 using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Navigation;
+using namespace Windows::Storage;
+using namespace concurrency;
 
 //Browser b(outputBox, urlContainer, prevButton, reloadButton, loaderRing);
 Browser b;
@@ -41,24 +43,32 @@ void prototype3::MainPage::PrevButton_Click(Platform::Object^ sender, Windows::U
 
 void prototype3::MainPage::ReloadButton_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
-	outputBox->Refresh();
+	auto currUrl = ref new Windows::Foundation::Uri(b.currentAddress);
+	b.isReloading = true;
+	outputBox->Navigate(currUrl);
 }
 
 
 void prototype3::MainPage::OutputBox_NavigationStarting(Windows::UI::Xaml::Controls::WebView^ sender, Windows::UI::Xaml::Controls::WebViewNavigationStartingEventArgs^ args)
 {
-	urlContainer->Text = args->Uri->ToString();
+	if (args != nullptr && args->Uri != nullptr && !b.navigationHasFailed) {
+		urlContainer->Text = args->Uri->ToString();
+	}
 	outputBox->Focus(Windows::UI::Xaml::FocusState::Keyboard);
 	loaderRing->IsActive = true;
 	loaderRing->Visibility = Windows::UI::Xaml::Visibility::Visible;
 	if (!b.directLoading) {
-		b.setHistory(args->Uri->ToString());
+		if (args != nullptr && args->Uri != nullptr && !b.navigationHasFailed && !b.isReloading) {
+			b.setHistory(args->Uri->ToString());
+		}
 	}
 }
 
 void prototype3::MainPage::OutputBox_ContentLoading(Windows::UI::Xaml::Controls::WebView^ sender, Windows::UI::Xaml::Controls::WebViewContentLoadingEventArgs^ args)
 {
-	urlContainer->Text = args->Uri->ToString();
+	if (args != nullptr && args->Uri != nullptr && !b.navigationHasFailed) {
+		urlContainer->Text = args->Uri->ToString();
+	}
 }
 
 void prototype3::MainPage::OutputBox_NavigationCompleted(Windows::UI::Xaml::Controls::WebView^ sender, Windows::UI::Xaml::Controls::WebViewNavigationCompletedEventArgs^ args)
@@ -68,16 +78,39 @@ void prototype3::MainPage::OutputBox_NavigationCompleted(Windows::UI::Xaml::Cont
 	/*auto dialog = ref new Windows::UI::Popups::MessageDialog(outputBox->DocumentTitle);
 	dialog->ShowAsync();*/
 	b.directLoading = false;
+	b.navigationHasFailed = false;
+	b.isReloading = false;
 }
 
 
 void prototype3::MainPage::OutputBox_NavigationFailed(Platform::Object^ sender, Windows::UI::Xaml::Controls::WebViewNavigationFailedEventArgs^ e)
 {
+	b.navigationHasFailed = true;
 	if (e->Uri) {
+		if (e->WebErrorStatus == Windows::Web::WebErrorStatus::CannotConnect) {
+			/*auto createFileTask = create_task(DownloadsFolder::CreateFileAsync(L"file.txt", CreationCollisionOption::OpenIfExists));
+			createFileTask.then([&](StorageFile ^ newFile)
+				{
+					create_task(FileIO::ReadTextAsync(newFile));
+				});*/
+			/*StorageFolder^ storageFolder = ApplicationData::Current->LocalFolder;
+			create_task(storageFolder->GetFileAsync("sample.txt")).then([&](StorageFile ^ sampleFile)
+				{
+					Platform::String^ j = FileIO::ReadTextAsync(sampleFile);
+					i->NavigateToString(j);
+				});*/
+		}
+		Platform::String^ j;
+		j = "ms-appdata:///local/html/index.html";
+		/*j = "<html><head><meta charset=\"UTF - 8\"> <meta name=\"viewport\" content=\"width = device - width, initial - scale = 1.0\"> <meta http-equiv=\"X - UA - Compatible\" content=\"ie = edge\"><title>Hello</title><style>body{margin:0;padding:0;background:#f3f3f3}.container{width:80%;height:calc(100vh - 60px);margin:0 auto;padding:0 20px;display:flex;flex-direction:column;justify-content:center;align-items:center}h1{font-size:3rem;margin-bottom:0;font-famiy: sans-serif;}p{line-height:1.5;margin:0;margin-top:10px;text-align:center}</style></head><body> <div class=\"container\"> <h1>Sorry.</h1> <p>This site is currently under maintainence.</p><p>Check back soon.</p></div></body></html>";
+		outputBox->NavigateToString(j);*/
+		auto jk = ref new Windows::Foundation::Uri(j);
+		outputBox->Navigate(jk);
 		auto dialog = ref new Windows::UI::Popups::MessageDialog("Page cannot be loaded.");
 		dialog->ShowAsync();
 	}
 	b.directLoading = false;
+	b.isReloading = false;
 }
 
 

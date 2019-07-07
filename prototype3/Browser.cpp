@@ -8,12 +8,13 @@ using namespace Windows::Storage;
 Browser::Browser() {
 	i = 0;
 	history[i] = "https://google.com";
+	currentAddress = history[0];
 	directLoading = true;
-	//saveFile();
+	navigationHasFailed = false;
+	isReloading = false;
 }
 Browser::~Browser()
 {
-	//saveFile();
 }
 int Browser::saveFile(Platform::String^ toSave) {
 	/*auto createFileTask = create_task(DownloadsFolder::CreateFileAsync(L"file.txt", CreationCollisionOption::OpenIfExists));
@@ -50,6 +51,7 @@ void Browser::setHistory(Platform::String^ urlToSave) {
 }
 void Browser::loadUrlDirect(Windows::UI::Xaml::Controls::WebView^ webView, Windows::Foundation::Uri^ urlToLoad) {
 	setHistory(urlToLoad->ToString());
+	currentAddress = urlToLoad->ToString();
 	directLoading = true;
 	try {
 		webView->Navigate(urlToLoad);
@@ -61,6 +63,7 @@ void Browser::loadUrlDirect(Windows::UI::Xaml::Controls::WebView^ webView, Windo
 }
 void Browser::loadPrevUrl(Windows::UI::Xaml::Controls::WebView^ webView, Windows::Foundation::Uri^ prevUrl) {
 	directLoading = true;
+	currentAddress = prevUrl->ToString();
 	try {
 		webView->Navigate(prevUrl);
 	}
@@ -73,6 +76,7 @@ void Browser::loadUrlSearch(Windows::UI::Xaml::Controls::WebView^ webView, Platf
 	directLoading = true;
 	auto searchUrl = ref new Windows::Foundation::Uri("https://google.com/search?q=" + toSearch);
 	setHistory(searchUrl->ToString());
+	currentAddress = searchUrl->ToString();
 	try {
 		webView->Navigate(searchUrl);
 	}
