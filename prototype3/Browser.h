@@ -6,6 +6,7 @@ private:
 	Platform::String^ history[100];
 public:
 	Platform::String^ currentAddress;
+	bool isLoading;
 	bool directLoading;
 	bool navigationHasFailed;
 	bool isReloading;

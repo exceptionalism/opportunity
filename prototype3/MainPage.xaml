@@ -26,7 +26,8 @@
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             x:Name="reloadButton"
-            ToolTipService.ToolTip="Reload" Click="ReloadButton_Click"
+            ToolTipService.ToolTip="Reload"
+            Click="ReloadButton_Click"
             />
         <TextBox
             Width="1276" Height="32"
