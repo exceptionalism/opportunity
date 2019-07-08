@@ -59,7 +59,6 @@
             ContentLoading="OutputBox_ContentLoading"
             NavigationCompleted="OutputBox_NavigationCompleted"
             NavigationFailed="OutputBox_NavigationFailed"
-            ContainsFullScreenElementChanged="OutputBox_ContainsFullScreenElementChanged"
             />
     </Grid>
 </Page>
