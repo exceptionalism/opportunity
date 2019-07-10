@@ -52,6 +52,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="prototype3_TemporaryKey.pfx" />
+    <None Include="Assets\404.html">
+      <Filter>Assets</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Page Include="MainPage.xaml" />

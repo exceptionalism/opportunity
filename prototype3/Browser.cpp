@@ -4,6 +4,7 @@
 
 using namespace concurrency;
 using namespace Windows::Storage;
+using namespace Windows::Foundation::Collections;
 
 Browser::Browser() {
 	i = 0;
@@ -119,5 +120,77 @@ int Browser::isValidUrl(Platform::String^ urlString) {
 			return hasProtocol ? 1 : -1;
 		it1++;
 	}
+	return 0;
+}
+
+int Browser::handleLocalErrroFiles() {
+	StorageFolder^ storageFolder = ApplicationData::Current->LocalFolder;
+	bool folExists = false;
+	create_task(storageFolder->GetFoldersAsync()).then([&](IVectorView<StorageFolder^>^ itemsInFolder) {
+		for (auto it = itemsInFolder->First(); it->HasCurrent; it->MoveNext())
+		{
+			if (it->Current->Name == "html") {
+				folExists = true;
+				break;
+			}
+		}
+		if (!folExists) {
+			create_task(storageFolder->CreateFolderAsync("html"));
+		}
+	});
+	create_task(storageFolder->GetFolderAsync("html")).then([=](StorageFolder^ folder1) {
+
+		create_task(folder1->GetFilesAsync()).then([=](IVectorView<StorageFile^>^ filesInFolder) {
+			//first
+			bool exists = false;
+			auto iter = filesInFolder->First();
+			while (iter->HasCurrent) {
+				if (iter->Current->Name == "404.html") {
+					exists = true;
+					break;
+				}
+				iter->MoveNext();
+			}
+			if (!exists) {
+				create_task(folder1->CreateFileAsync("404.html", CreationCollisionOption::FailIfExists));
+				create_task(folder1->GetFileAsync("404.html")).then([&](StorageFile^ sampleFile) {
+					create_task(FileIO::WriteTextAsync(sampleFile, "<!DOCTYPE html><html lang=\"en\"><head> <meta charset=\"UTF - 8\"> <meta name=\"viewport\" content=\"width = device - width, initial - scale = 1.0\"> <meta http-equiv=\"X - UA - Compatible\" content=\"ie = edge\"> <title>Orient College : A Levels</title> <link href=\"https://fonts.googleapis.com/css?family=Quicksand\" rel=\"stylesheet\"> <link rel=\"stylesheet\" href=\"./styles.css\"></head><body> <div class=\"container quicksand\"> <h1>Oops!</h1> <p>The address you entered could not be accessed.</p><p>It's possible that the content in the specified location was moved to another location, or you might have entered incorrectly the address. Please, make sure the address you're entering exists.</p></div></body></html>"));
+				});
+			}
+			//second
+			exists = false;
+			iter = filesInFolder->First();
+			Platform::String^ s;
+			while (iter->HasCurrent) {
+				if (iter->Current->Name == "styles.css") {
+					exists = true;
+					break;
+				}
+				iter->MoveNext();
+			}
+			if (!exists) {
+				create_task(folder1->CreateFileAsync("styles.css", CreationCollisionOption::FailIfExists));
+				create_task(folder1->GetFileAsync("styles.css")).then([&](StorageFile^ sampleFile) {
+					create_task(FileIO::WriteTextAsync(sampleFile, "body{margin:0;padding:0;background:#f3f3f3}.container{width:80%;height:calc(100vh - 60px);margin:0 auto;padding:0 20px;display:flex;flex-direction:column;justify-content:center;align-items:center}.quicksand{font-family:Quicksand,sans-serif}h1{font-size:3rem;margin-bottom:0}p{line-height:1.5;margin:0;margin-top:10px;text-align:center}"));
+				});
+			}
+			//third
+			exists = false;
+			iter = filesInFolder->First();
+			while (iter->HasCurrent) {
+				if (iter->Current->Name == "cannotConnect.html") {
+					exists = true;
+					break;
+				}
+				iter->MoveNext();
+			}
+			if (!exists) {
+				create_task(folder1->CreateFileAsync("cannotConnect.html", CreationCollisionOption::FailIfExists));
+				create_task(folder1->GetFileAsync("cannotConnect.html")).then([&](StorageFile^ sampleFile) {
+					create_task(FileIO::WriteTextAsync(sampleFile, "<!DOCTYPE html><html lang=\"en\"><head> <meta charset=\"UTF - 8\"> <meta name=\"viewport\" content=\"width = device - width, initial - scale = 1.0\"> <meta http-equiv=\"X - UA - Compatible\" content=\"ie = edge\"> <title>Orient College : A Levels</title> <link href=\"https://fonts.googleapis.com/css?family=Quicksand\" rel=\"stylesheet\"> <link rel=\"stylesheet\" href=\"./styles.css\"></head><body> <div class=\"container quicksand\"> <h1>Oops!</h1> <p>It looks like you don't have internet connection.</p><p>Please, make sure you're connected to the internet and try again.</p></div></body></html>"));
+				});
+			}
+		});
+	});
 	return 0;
 }

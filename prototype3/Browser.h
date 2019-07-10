@@ -21,6 +21,8 @@ public:
 	int isValidUrl(Platform::String^ urlString); //done
 	void loadUrlSearch(Windows::UI::Xaml::Controls::WebView^ webView, Platform::String^ toSearch);//done
 
+	int handleLocalErrroFiles();
+
 	~Browser();
 };
 

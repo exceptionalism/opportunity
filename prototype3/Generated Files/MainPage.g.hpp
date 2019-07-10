@@ -67,8 +67,6 @@ void ::prototype3::MainPage::Connect(int __connectionId, ::Platform::Object^ __t
                 (::Windows::UI::Xaml::Controls::WebView^, ::Windows::UI::Xaml::Controls::WebViewNavigationCompletedEventArgs^))&MainPage::OutputBox_NavigationCompleted);
             (safe_cast<::Windows::UI::Xaml::Controls::WebView^>(this->outputBox))->NavigationFailed += ref new ::Windows::UI::Xaml::Controls::WebViewNavigationFailedEventHandler(this, (void (::prototype3::MainPage::*)
                 (::Platform::Object^, ::Windows::UI::Xaml::Controls::WebViewNavigationFailedEventArgs^))&MainPage::OutputBox_NavigationFailed);
-            (safe_cast<::Windows::UI::Xaml::Controls::WebView^>(this->outputBox))->ContainsFullScreenElementChanged += ref new ::Windows::Foundation::TypedEventHandler<::Windows::UI::Xaml::Controls::WebView^, ::Platform::Object^>(this, (void (::prototype3::MainPage::*)
-                (::Windows::UI::Xaml::Controls::WebView^, ::Platform::Object^))&MainPage::OutputBox_ContainsFullScreenElementChanged);
         }
         break;
     }

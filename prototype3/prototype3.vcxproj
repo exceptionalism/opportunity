@@ -196,6 +196,7 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
+    <None Include="Assets\404.html" />
     <None Include="prototype3_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
