@@ -1,0 +1,32 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: #f3f3f3
+}
+
+.container {
+    width: 80%;
+    height: calc(100vh - 60px);
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center
+}
+
+.quicksand {
+    font-family: Quicksand,sans-serif
+}
+
+h1 {
+    font-size: 3rem;
+    margin-bottom: 0
+}
+
+p {
+    line-height: 1.5;
+    margin: 0;
+    margin-top: 10px;
+    text-align: center
+}

@@ -196,7 +196,15 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <None Include="Assets\404.html" />
+    <None Include="Assets\404.html">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="Assets\cannotConnect.html">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="Assets\styles.css">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
     <None Include="prototype3_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>

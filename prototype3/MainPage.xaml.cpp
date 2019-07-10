@@ -29,7 +29,6 @@ Browser b;
 MainPage::MainPage()
 {
 	InitializeComponent();
-	//b.handleLocalErrroFiles();
 }
 
 
@@ -106,14 +105,8 @@ void prototype3::MainPage::OutputBox_NavigationFailed(Platform::Object^ sender, 
 	loaderRing->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
 	if (e->Uri) {
 		if (e->WebErrorStatus == WebErrorStatus::CannotConnect || e->WebErrorStatus == WebErrorStatus::UnexpectedStatusCode || e->WebErrorStatus == WebErrorStatus::NotFound || e->WebErrorStatus == WebErrorStatus::ConnectionAborted || e->WebErrorStatus == WebErrorStatus::ConnectionReset || e->WebErrorStatus == WebErrorStatus::Disconnected || e->WebErrorStatus == WebErrorStatus::Forbidden) {
-			/*auto jk = ref new Windows::Foundation::Uri("ms-appdata:///local/404.html");
-			outputBox->Navigate(jk);*/
-			Platform::String^ j;
-			j = "ms-appx-web:///Assets/404.html";
-			/*j = "<html><head><meta charset=\"UTF - 8\"> <meta name=\"viewport\" content=\"width = device - width, initial - scale = 1.0\"> <meta http-equiv=\"X - UA - Compatible\" content=\"ie = edge\"><title>Hello</title><style>body{margin:0;padding:0;background:#f3f3f3}.container{width:80%;height:calc(100vh - 60px);margin:0 auto;padding:0 20px;display:flex;flex-direction:column;justify-content:center;align-items:center}h1{font-size:3rem;margin-bottom:0;font-famiy: sans-serif;}p{line-height:1.5;margin:0;margin-top:10px;text-align:center}</style></head><body> <div class=\"container\"> <h1>Sorry.</h1> <p>This site is currently under maintainence.</p><p>Check back soon.</p></div></body></html>";
-			outputBox->NavigateToString(j);*/
-			auto jk = ref new Windows::Foundation::Uri(j);
-			outputBox->Navigate(jk);
+			auto error404 = ref new Windows::Foundation::Uri("ms-appx-web:///Assets/cannotConnect.html");
+			outputBox->Navigate(error404);
 		}
 		else {
 			auto d = ref new Windows::UI::Popups::MessageDialog(e->WebErrorStatus.ToString());
