@@ -67,11 +67,6 @@ void prototype3::MainPage::OutputBox_NavigationStarting(Windows::UI::Xaml::Contr
 	outputBox->Focus(Windows::UI::Xaml::FocusState::Keyboard);
 	loaderRing->IsActive = true;
 	loaderRing->Visibility = Windows::UI::Xaml::Visibility::Visible;
-	if (!b.directLoading) {
-		if (args != nullptr && args->Uri != nullptr && !b.navigationHasFailed && !b.isReloading) {
-			b.setHistory(args->Uri->ToString());
-		}
-	}
 	reloadButton->Content = "X";
 }
 
@@ -79,6 +74,11 @@ void prototype3::MainPage::OutputBox_ContentLoading(Windows::UI::Xaml::Controls:
 {
 	if (args != nullptr && args->Uri != nullptr && !b.navigationHasFailed) {
 		urlContainer->Text = args->Uri->ToString();
+	}
+	if (!b.directLoading) {
+		if (args != nullptr && args->Uri != nullptr && !b.navigationHasFailed && !b.isReloading) {
+			b.setHistory(args->Uri->ToString());
+		}
 	}
 }
 

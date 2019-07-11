@@ -6,6 +6,8 @@ using namespace concurrency;
 using namespace Windows::Storage;
 using namespace Windows::Foundation::Collections;
 
+static Platform::String^ saveData;
+
 Browser::Browser() {
 	i = 0;
 	history[i] = "https://google.com";
@@ -18,24 +20,12 @@ Browser::~Browser()
 {
 }
 int Browser::saveFile(Platform::String^ toSave) {
-	/*auto createFileTask = create_task(DownloadsFolder::CreateFileAsync(L"file.txt", CreationCollisionOption::OpenIfExists));
-	createFileTask.then([&](StorageFile^ newFile)
-		{
-			create_task(FileIO::WriteTextAsync(newFile, toSave));
-		});*/
-
-
-	//StorageFolder^ storageFolder = ApplicationData::Current->LocalFolder;
-	//concurrency::create_task(storageFolder->CreateFileAsync("sample.txt", CreationCollisionOption::ReplaceExisting));
-	//create_task(storageFolder->GetFileAsync("sample.txt")).then([&](StorageFile^ sampleFile) {
-		//int j = 0;
-		// Process file
-		/*while (j < i) {
-			create_task(FileIO::AppendTextAsync(sampleFile, history[j]));
-			j++;
-		}*/
-		//create_task(FileIO::WriteTextAsync(sampleFile, toSave));
-	//});
+	saveData = toSave;
+	StorageFolder^ storageFolder = ApplicationData::Current->LocalFolder;
+	create_task(storageFolder->CreateFileAsync("history.txt", CreationCollisionOption::OpenIfExists));
+	create_task(storageFolder->GetFileAsync("history.txt")).then([&](StorageFile^ sampleFile) {
+		create_task(FileIO::AppendTextAsync(sampleFile, saveData + "\n"));
+	});
 	return 0;
 }
 bool Browser::hasPreviousUrl() {
