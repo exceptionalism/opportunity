@@ -11,6 +11,7 @@ public:
 	bool directLoading;
 	bool navigationHasFailed;
 	bool isReloading;
+	bool homeScreenOpen;
 
 	int saveFile(Platform::String^);
 	Browser();//done

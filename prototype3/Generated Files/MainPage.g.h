@@ -38,11 +38,13 @@ namespace prototype3
     
     
         private: ::Windows::UI::Xaml::Controls::Button^ prevButton;
+        private: ::Windows::UI::Xaml::Controls::Button^ homeButton;
         private: ::Windows::UI::Xaml::Controls::Button^ reloadButton;
         private: ::Windows::UI::Xaml::Controls::TextBox^ urlContainer;
         private: ::Windows::UI::Xaml::Controls::ProgressRing^ loaderRing;
         private: ::Windows::UI::Xaml::Controls::WebView^ outputBox;
         private: ::Windows::UI::Xaml::Controls::StackPanel^ homeScreen;
+        private: ::Windows::UI::Xaml::Controls::TextBox^ homeSearchBox;
     };
 }
 

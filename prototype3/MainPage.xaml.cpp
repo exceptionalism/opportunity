@@ -35,31 +35,43 @@ MainPage::MainPage()
 void prototype3::MainPage::PrevButton_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
 	if (b.hasPreviousUrl()) {
-		auto newUrl = ref new  Windows::Foundation::Uri(b.getPreviousUrl());
-		b.loadPrevUrl(outputBox, newUrl);
+		Platform::String^ prevUrl = b.getPreviousUrl();
+		if (prevUrl == "n") {
+			urlContainer->Text = "";
+			b.homeScreenOpen = true;
+			outputBox->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
+			homeScreen->Visibility = Windows::UI::Xaml::Visibility::Visible;
+		}
+		else {
+			auto newUrl = ref new  Windows::Foundation::Uri(prevUrl);
+			b.loadPrevUrl(outputBox, newUrl);
+		}
 	}
 }
 
 
 void prototype3::MainPage::ReloadButton_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
-	if (!b.isLoading) {
-		auto currUrl = ref new Windows::Foundation::Uri(b.currentAddress);
-		b.isReloading = true;
-		outputBox->Navigate(currUrl);
-	}
-	else if (b.isLoading) {
-		outputBox->Stop();
-		loaderRing->IsActive = false;
-		loaderRing->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
-		b.isLoading = false;
-		reloadButton->Content = "R";
+	if (!b.homeScreenOpen) {
+		if (!b.isLoading) {
+			auto currUrl = ref new Windows::Foundation::Uri(b.currentAddress);
+			b.isReloading = true;
+			outputBox->Navigate(currUrl);
+		}
+		else if (b.isLoading) {
+			outputBox->Stop();
+			loaderRing->IsActive = false;
+			loaderRing->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
+			b.isLoading = false;
+			reloadButton->Content = "R";
+		}
 	}
 }
 
 
 void prototype3::MainPage::OutputBox_NavigationStarting(Windows::UI::Xaml::Controls::WebView^ sender, Windows::UI::Xaml::Controls::WebViewNavigationStartingEventArgs^ args) {
 
+	b.homeScreenOpen = false;
 	b.isLoading = true;
 	if (args != nullptr && args->Uri != nullptr && !b.navigationHasFailed) {
 		urlContainer->Text = args->Uri->ToString();
@@ -122,6 +134,7 @@ void prototype3::MainPage::UrlContainer_KeyDown(Platform::Object^ sender, Window
 {
 	if (e->Key == Windows::System::VirtualKey::Enter) {
 		if (urlContainer->Text == "opportunity://home") {
+			b.homeScreenOpen = true;
 			outputBox->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
 			homeScreen->Visibility = Windows::UI::Xaml::Visibility::Visible;
 		}
@@ -141,4 +154,20 @@ void prototype3::MainPage::UrlContainer_KeyDown(Platform::Object^ sender, Window
 			}
 		}
 	}
+}
+
+void prototype3::MainPage::TextBox_KeyDown(Platform::Object^ sender, Windows::UI::Xaml::Input::KeyRoutedEventArgs^ e)
+{
+	if (e->Key == Windows::System::VirtualKey::Enter) {
+		b.loadUrlSearch(outputBox, homeSearchBox->Text);
+	}
+}
+
+
+void prototype3::MainPage::HomeButton_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+{
+	urlContainer->Text = "";
+	b.homeScreenOpen = true;
+	outputBox->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
+	homeScreen->Visibility = Windows::UI::Xaml::Visibility::Visible;
 }

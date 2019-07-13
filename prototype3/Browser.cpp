@@ -9,12 +9,12 @@ using namespace Windows::Foundation::Collections;
 static Platform::String^ saveData;
 
 Browser::Browser() {
-	i = 0;
-	history[i] = "https://google.com";
-	currentAddress = history[0];
+	i = -1;
+	currentAddress = "";
 	directLoading = true;
 	navigationHasFailed = false;
 	isReloading = false;
+	homeScreenOpen = true;
 }
 Browser::~Browser() {
 	delete this;
@@ -29,11 +29,14 @@ int Browser::saveFile(Platform::String^ toSave) {
 	return 0;
 }
 bool Browser::hasPreviousUrl() {
-	return i == 0 ? false : true;
+	return i < 0 ? false : true;
 }
 Platform::String^ Browser::getPreviousUrl() {
-	i--;
-	return history[i];
+	if (i >= 1) {
+		i--;
+		return history[i];
+	}
+	return "n";
 }
 void Browser::setHistory(Platform::String^ urlToSave) {
 	i++;

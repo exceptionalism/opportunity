@@ -39,24 +39,31 @@ void ::prototype3::MainPage::Connect(int __connectionId, ::Platform::Object^ __t
         break;
     case 3:
         {
+            this->homeButton = safe_cast<::Windows::UI::Xaml::Controls::Button^>(__target);
+            (safe_cast<::Windows::UI::Xaml::Controls::Button^>(this->homeButton))->Click += ref new ::Windows::UI::Xaml::RoutedEventHandler(this, (void (::prototype3::MainPage::*)
+                (::Platform::Object^, ::Windows::UI::Xaml::RoutedEventArgs^))&MainPage::HomeButton_Click);
+        }
+        break;
+    case 4:
+        {
             this->reloadButton = safe_cast<::Windows::UI::Xaml::Controls::Button^>(__target);
             (safe_cast<::Windows::UI::Xaml::Controls::Button^>(this->reloadButton))->Click += ref new ::Windows::UI::Xaml::RoutedEventHandler(this, (void (::prototype3::MainPage::*)
                 (::Platform::Object^, ::Windows::UI::Xaml::RoutedEventArgs^))&MainPage::ReloadButton_Click);
         }
         break;
-    case 4:
+    case 5:
         {
             this->urlContainer = safe_cast<::Windows::UI::Xaml::Controls::TextBox^>(__target);
             (safe_cast<::Windows::UI::Xaml::Controls::TextBox^>(this->urlContainer))->KeyDown += ref new ::Windows::UI::Xaml::Input::KeyEventHandler(this, (void (::prototype3::MainPage::*)
                 (::Platform::Object^, ::Windows::UI::Xaml::Input::KeyRoutedEventArgs^))&MainPage::UrlContainer_KeyDown);
         }
         break;
-    case 5:
+    case 6:
         {
             this->loaderRing = safe_cast<::Windows::UI::Xaml::Controls::ProgressRing^>(__target);
         }
         break;
-    case 6:
+    case 7:
         {
             this->outputBox = safe_cast<::Windows::UI::Xaml::Controls::WebView^>(__target);
             (safe_cast<::Windows::UI::Xaml::Controls::WebView^>(this->outputBox))->NavigationStarting += ref new ::Windows::Foundation::TypedEventHandler<::Windows::UI::Xaml::Controls::WebView^, ::Windows::UI::Xaml::Controls::WebViewNavigationStartingEventArgs^>(this, (void (::prototype3::MainPage::*)
@@ -69,9 +76,16 @@ void ::prototype3::MainPage::Connect(int __connectionId, ::Platform::Object^ __t
                 (::Platform::Object^, ::Windows::UI::Xaml::Controls::WebViewNavigationFailedEventArgs^))&MainPage::OutputBox_NavigationFailed);
         }
         break;
-    case 7:
+    case 8:
         {
             this->homeScreen = safe_cast<::Windows::UI::Xaml::Controls::StackPanel^>(__target);
+        }
+        break;
+    case 9:
+        {
+            this->homeSearchBox = safe_cast<::Windows::UI::Xaml::Controls::TextBox^>(__target);
+            (safe_cast<::Windows::UI::Xaml::Controls::TextBox^>(this->homeSearchBox))->KeyDown += ref new ::Windows::UI::Xaml::Input::KeyEventHandler(this, (void (::prototype3::MainPage::*)
+                (::Platform::Object^, ::Windows::UI::Xaml::Input::KeyRoutedEventArgs^))&MainPage::TextBox_KeyDown);
         }
         break;
     }

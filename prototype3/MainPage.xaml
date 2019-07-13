@@ -21,8 +21,19 @@
 
         <Button
             Width="35" Height="32"
-            Content="R"
+            Content="H"
             Margin="45, 5, 0, 0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            x:Name="homeButton"
+            ToolTipService.ToolTip="Reload"
+            Click="HomeButton_Click"
+            />
+        
+        <Button
+            Width="35" Height="32"
+            Content="R"
+            Margin="85, 5, 0, 0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             x:Name="reloadButton"
@@ -30,11 +41,11 @@
             Click="ReloadButton_Click"
             />
         <TextBox
-            Width="1276" Height="32"
-            Margin="85,5, 0, 0"
+            Width="1236" Height="32"
+            Margin="125,5, 0, 0"
             VerticalAlignment="Top"
             HorizontalAlignment="Left"
-            PlaceholderText="URL" Text="https://"
+            PlaceholderText="URL" Text=""
             x:Name="urlContainer"
             KeyDown="UrlContainer_KeyDown"
             />
@@ -70,8 +81,13 @@
             <Image Source="Assets/SplashScreen.scale-200.png" Width="200" Height="97" />
             <TextBlock Text="OpportunitY" FontSize="48" Foreground="#88256a" HorizontalAlignment="Center" />
             <TextBox
+                x:Name="homeSearchBox"
+                Text=""
                 PlaceholderText="Search" BorderThickness="0"
-                Height="40" Width="500" Margin="0, 50, 0, 0" Padding="20,10,20,10" FontSize="14"/>
+                Height="40" Width="500"
+                Margin="0, 50, 0, 0" Padding="20,10,20,10"
+                FontSize="14"
+                KeyDown="TextBox_KeyDown"/>
         </StackPanel>
     </Grid>
 </Page>
