@@ -7,15 +7,15 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="faa70111-dc30-407d-92a9-92c35263016b"
+    Name="Opportunity-web-browser"
     Publisher="CN=oshan"
     Version="1.0.1.0" />
 
   <mp:PhoneIdentity PhoneProductId="faa70111-dc30-407d-92a9-92c35263016b" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>prototype3</DisplayName>
-    <PublisherDisplayName>oshan</PublisherDisplayName>
+    <DisplayName>Opportunity</DisplayName>
+    <PublisherDisplayName>oshanshrestha</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
@@ -32,13 +32,19 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="prototype3.App">
       <uap:VisualElements
-        DisplayName="prototype3"
+        DisplayName="Opportunity"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
-        Description="prototype3"
+        Description="A web browser, developed by Computer Science UNG freshmen at Kathmandu University as semester project."
         BackgroundColor="transparent">
-        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" Square71x71Logo="Assets\SmallTile.png" Square310x310Logo="Assets\LargeTile.png" ShortName="Opportunity">
+          <uap:ShowNameOnTiles>
+            <uap:ShowOn Tile="wide310x150Logo"/>
+            <uap:ShowOn Tile="square310x310Logo"/>
+          </uap:ShowNameOnTiles>
+        </uap:DefaultTile >
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
+        <uap:LockScreen BadgeLogo="Assets\BadgeLogo.png" Notification="badgeAndTileText"/>
       </uap:VisualElements>
     </Application>
   </Applications>
