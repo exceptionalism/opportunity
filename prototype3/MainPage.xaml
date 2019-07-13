@@ -52,13 +52,26 @@
             Width="1366" Height="666"
             Margin="0, 42, 0, 0"
             VerticalAlignment="Top"
-            Source="https://google.com"
+            HorizontalAlignment="Left"
             DefaultBackgroundColor="White"
+            Visibility="Collapsed"
             x:Name="outputBox"
             NavigationStarting="OutputBox_NavigationStarting"
             ContentLoading="OutputBox_ContentLoading"
             NavigationCompleted="OutputBox_NavigationCompleted"
             NavigationFailed="OutputBox_NavigationFailed"
             />
+        <StackPanel
+            x:Name="homeScreen"
+            Height="666" Width="1366"
+            Margin="0,42,0,0" VerticalAlignment="Top"
+            HorizontalAlignment="Left"
+            Visibility="Visible" Background="#BCB8B1" Padding="0, 70, 0, 10">
+            <Image Source="Assets/SplashScreen.scale-200.png" Width="200" Height="97" />
+            <TextBlock Text="OpportunitY" FontSize="48" Foreground="#88256a" HorizontalAlignment="Center" />
+            <TextBox
+                PlaceholderText="Search" BorderThickness="0"
+                Height="40" Width="500" Margin="0, 50, 0, 0" Padding="20,10,20,10" FontSize="14"/>
+        </StackPanel>
     </Grid>
 </Page>

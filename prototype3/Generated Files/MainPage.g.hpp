@@ -69,6 +69,11 @@ void ::prototype3::MainPage::Connect(int __connectionId, ::Platform::Object^ __t
                 (::Platform::Object^, ::Windows::UI::Xaml::Controls::WebViewNavigationFailedEventArgs^))&MainPage::OutputBox_NavigationFailed);
         }
         break;
+    case 7:
+        {
+            this->homeScreen = safe_cast<::Windows::UI::Xaml::Controls::StackPanel^>(__target);
+        }
+        break;
     }
     _contentLoaded = true;
 }

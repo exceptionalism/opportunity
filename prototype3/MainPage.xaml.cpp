@@ -72,6 +72,8 @@ void prototype3::MainPage::OutputBox_NavigationStarting(Windows::UI::Xaml::Contr
 
 void prototype3::MainPage::OutputBox_ContentLoading(Windows::UI::Xaml::Controls::WebView^ sender, Windows::UI::Xaml::Controls::WebViewContentLoadingEventArgs^ args)
 {
+	outputBox->Visibility = Windows::UI::Xaml::Visibility::Visible;
+	homeScreen->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
 	if (args != nullptr && args->Uri != nullptr && !b.navigationHasFailed) {
 		urlContainer->Text = args->Uri->ToString();
 	}
@@ -119,18 +121,24 @@ void prototype3::MainPage::OutputBox_NavigationFailed(Platform::Object^ sender, 
 void prototype3::MainPage::UrlContainer_KeyDown(Platform::Object^ sender, Windows::UI::Xaml::Input::KeyRoutedEventArgs^ e)
 {
 	if (e->Key == Windows::System::VirtualKey::Enter) {
-		int i = 1;
- 		i = b.isValidUrl(urlContainer->Text);
-		if (i == 1) {
-			auto urlToLoad = ref new Windows::Foundation::Uri(urlContainer->Text);
-			b.loadUrlDirect(outputBox, urlToLoad);
+		if (urlContainer->Text == "opportunity://home") {
+			outputBox->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
+			homeScreen->Visibility = Windows::UI::Xaml::Visibility::Visible;
 		}
-		else if (i == 0) {
-			b.loadUrlSearch(outputBox, urlContainer->Text);
-		}
-		else if (i == -1) {
-			auto urlToGo = ref new Windows::Foundation::Uri("http://" + urlContainer->Text);
-			b.loadUrlDirect(outputBox, urlToGo);
+		else {
+			int i = 1;
+			i = b.isValidUrl(urlContainer->Text);
+			if (i == 1) {
+				auto urlToLoad = ref new Windows::Foundation::Uri(urlContainer->Text);
+				b.loadUrlDirect(outputBox, urlToLoad);
+			}
+			else if (i == 0) {
+				b.loadUrlSearch(outputBox, urlContainer->Text);
+			}
+			else if (i == -1) {
+				auto urlToGo = ref new Windows::Foundation::Uri("http://" + urlContainer->Text);
+				b.loadUrlDirect(outputBox, urlToGo);
+			}
 		}
 	}
 }

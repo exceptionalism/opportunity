@@ -16,8 +16,8 @@ Browser::Browser() {
 	navigationHasFailed = false;
 	isReloading = false;
 }
-Browser::~Browser()
-{
+Browser::~Browser() {
+	delete this;
 }
 int Browser::saveFile(Platform::String^ toSave) {
 	saveData = toSave;
