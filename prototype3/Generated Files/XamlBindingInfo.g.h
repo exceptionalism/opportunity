@@ -24,7 +24,6 @@ namespace XamlBindingInfo
         virtual void Recycle() = 0;
         virtual void ProcessBindings(::Platform::Object^ item, int itemIndex, int phase, int* nextPhase) = 0;
         virtual void SubscribeForDataContextChanged(::Windows::UI::Xaml::FrameworkElement^ object, ::XamlBindingInfo::XamlBindings^ handler) = 0;
-        virtual void Disable(int lineNumber, int columnNumber) = 0;
     };
 
     class IXamlBindingTracking
@@ -40,7 +39,6 @@ namespace XamlBindingInfo
     ref class XamlBindings sealed :
         ::Windows::UI::Xaml::IDataTemplateExtension,
         ::Windows::UI::Xaml::Markup::IComponentConnector,
-        ::Windows::UI::Xaml::Markup::IXamlBindScopeDiagnostics,
         ::Windows::UI::Xaml::Markup::IDataTemplateComponent
     {
     internal:
@@ -65,7 +63,6 @@ namespace XamlBindingInfo
         virtual int ProcessBindings(::Windows::UI::Xaml::Controls::ContainerContentChangingEventArgs^ args);
         virtual void ResetTemplate();
 
-        virtual void Disable(int lineNumber, int columnNumber);
     private:
         ~XamlBindings();
         ::XamlBindingInfo::IXamlBindings* _pBindings = nullptr;
@@ -142,8 +139,6 @@ namespace XamlBindingInfo
             // Overridden in the binding class as needed.
             *nextPhase = -1;
         }
-
-        virtual void Disable(int lineNumber, int columnNumber) = 0;
     };
 
     ref class XamlBindingTrackingBase

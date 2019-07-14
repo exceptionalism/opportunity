@@ -39,6 +39,7 @@ void prototype3::MainPage::PrevButton_Click(Platform::Object^ sender, Windows::U
 		if (prevUrl == "n") {
 			urlContainer->Text = "";
 			b.homeScreenOpen = true;
+			homeSearchBox->Text = "";
 			outputBox->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
 			homeScreen->Visibility = Windows::UI::Xaml::Visibility::Visible;
 		}

@@ -95,10 +95,6 @@ void ::XamlBindingInfo::XamlBindings::Recycle()
     this->_pBindings->Recycle();
 }
 
-void ::XamlBindingInfo::XamlBindings::Disable(int lineNumber, int columnNumber)
-{
-    this->_pBindings->Disable(lineNumber, columnNumber);
-}
 
 // XamlBindingTrackingBase
 

@@ -3,7 +3,7 @@ class Browser
 {
 private:
 	int i;
-	Platform::String^ history[100];
+	Platform::String^ history[500];
 public:
 	Platform::String^ currentAddress;
 

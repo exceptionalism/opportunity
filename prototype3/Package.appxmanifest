@@ -9,7 +9,7 @@
   <Identity
     Name="Opportunity-web-browser"
     Publisher="CN=oshan"
-    Version="1.0.1.0" />
+    Version="2.0.3.0" />
 
   <mp:PhoneIdentity PhoneProductId="faa70111-dc30-407d-92a9-92c35263016b" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 

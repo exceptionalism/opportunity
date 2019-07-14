@@ -36,6 +36,8 @@ Platform::String^ Browser::getPreviousUrl() {
 		i--;
 		return history[i];
 	}
+	history[0] = "";
+	i = -1;
 	return "n";
 }
 void Browser::setHistory(Platform::String^ urlToSave) {
