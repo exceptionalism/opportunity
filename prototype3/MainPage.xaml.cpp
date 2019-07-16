@@ -25,10 +25,35 @@ using namespace Windows::Web;
 
 //Browser b(outputBox, urlContainer, prevButton, reloadButton, loaderRing);
 Browser b;
+static Platform::String^ historyData = "";
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 MainPage::MainPage()
 {
 	InitializeComponent();
+	StorageFolder^ s = ApplicationData::Current->LocalFolder;
+	bool historyFileCheck = false;
+	/*create_task(s->GetFilesAsync()).then([&](IVectorView<StorageFile^>^ filesInFolder) {
+		if (filesInFolder->First()->HasCurrent) {
+			for (auto it = filesInFolder->First(); it->HasCurrent; it->MoveNext())
+			{
+				StorageFile^ f = it->Current;
+				if (f->Name == "history.txt") {
+					return FileIO::ReadTextAsync(f);
+				}
+			}
+		}
+		create_task(s->CreateFileAsync("history.txt", CreationCollisionOption::OpenIfExists)).then([&](StorageFile^ fileJustCreated) {
+			return FileIO::ReadTextAsync(fileJustCreated);
+		});
+	}).then([&](Platform::String^ strData) {
+		historyData = strData;
+		});*/
+
+	create_task(s->CreateFileAsync("history.txt", CreationCollisionOption::OpenIfExists)).then([&](StorageFile^ fileJustCreated) {
+		return FileIO::ReadTextAsync(fileJustCreated);
+	}).then([&](Platform::String^ strData) {
+		historyData = strData;
+		});
 }
 
 
@@ -37,6 +62,12 @@ void prototype3::MainPage::PrevButton_Click(Platform::Object^ sender, Windows::U
 	if (b.hasPreviousUrl()) {
 		Platform::String^ prevUrl = b.getPreviousUrl();
 		if (prevUrl == "n") {
+			StorageFolder^ s = ApplicationData::Current->LocalFolder;
+			create_task(s->CreateFileAsync("history.txt", CreationCollisionOption::OpenIfExists)).then([&](StorageFile^ fileJustCreated) {
+				return FileIO::ReadTextAsync(fileJustCreated);
+				}).then([&](Platform::String^ strData) {
+					historyData = strData;
+					});
 			urlContainer->Text = "";
 			b.homeScreenOpen = true;
 			homeSearchBox->Text = "";
@@ -87,6 +118,8 @@ void prototype3::MainPage::OutputBox_ContentLoading(Windows::UI::Xaml::Controls:
 {
 	outputBox->Visibility = Windows::UI::Xaml::Visibility::Visible;
 	homeScreen->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
+	hisHolder->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
+	historyList->Children->Clear();
 	if (args != nullptr && args->Uri != nullptr && !b.navigationHasFailed) {
 		urlContainer->Text = args->Uri->ToString();
 	}
@@ -167,8 +200,27 @@ void prototype3::MainPage::TextBox_KeyDown(Platform::Object^ sender, Windows::UI
 
 void prototype3::MainPage::HomeButton_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
+	StorageFolder^ s = ApplicationData::Current->LocalFolder;
+	create_task(s->CreateFileAsync("history.txt", CreationCollisionOption::OpenIfExists)).then([&](StorageFile^ fileJustCreated) {
+		return FileIO::ReadTextAsync(fileJustCreated);
+		}).then([&](Platform::String^ strData) {
+			historyData = strData;
+			});
 	urlContainer->Text = "";
 	b.homeScreenOpen = true;
 	outputBox->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
 	homeScreen->Visibility = Windows::UI::Xaml::Visibility::Visible;
+	hisHolder->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
+}
+
+
+void prototype3::MainPage::TextBlock_Tapped(Platform::Object^ sender, Windows::UI::Xaml::Input::TappedRoutedEventArgs^ e)
+{
+	outputBox->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
+	homeScreen->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
+	hisHolder->Visibility = Windows::UI::Xaml::Visibility::Visible;
+	Windows::UI::Xaml::Controls::TextBlock^ th = b.processHistory(historyData, historyList, outputBox);
+	/*for (int i = b.histCount; i >= 0; i--) {
+		historyList->Children->Append(*(&th+i));
+	}*/
 }

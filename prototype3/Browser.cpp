@@ -15,6 +15,7 @@ Browser::Browser() {
 	navigationHasFailed = false;
 	isReloading = false;
 	homeScreenOpen = true;
+	histCount = 0;
 }
 Browser::~Browser() {
 	delete this;
@@ -22,8 +23,7 @@ Browser::~Browser() {
 int Browser::saveFile(Platform::String^ toSave) {
 	saveData = toSave;
 	StorageFolder^ storageFolder = ApplicationData::Current->LocalFolder;
-	create_task(storageFolder->CreateFileAsync("history.txt", CreationCollisionOption::OpenIfExists));
-	create_task(storageFolder->GetFileAsync("history.txt")).then([&](StorageFile^ sampleFile) {
+	create_task(storageFolder->CreateFileAsync("history.txt", CreationCollisionOption::OpenIfExists)).then([&](StorageFile^ sampleFile) {
 		create_task(FileIO::AppendTextAsync(sampleFile, saveData + "\n"));
 	});
 	return 0;
@@ -116,4 +116,45 @@ int Browser::isValidUrl(Platform::String^ urlString) {
 		it1++;
 	}
 	return 0;
+}
+
+
+
+Windows::UI::Xaml::Controls::TextBlock^ Browser::processHistory(Platform::String^ hDt, Windows::UI::Xaml::Controls::StackPanel^ stkPnl, Windows::UI::Xaml::Controls::WebView^ oB) {
+	Windows::UI::Xaml::Controls::TextBlock^ hS[300];
+	std::string links[100];
+	int i = 0;
+	std::wstring fooW(hDt->Begin());
+	std::string strData(fooW.begin(), fooW.end());
+	std::string::iterator it1 = strData.begin();
+	while (it1 != strData.end()) {
+		if (*it1 == '\n') {
+			i++;
+		}
+		else {
+			links[i].push_back(*it1);
+		}
+		it1++;
+	};
+	i--;
+	histCount = i;
+	int counter = 0;
+	while (i > -1 && counter < 16) {
+		std::wstring w_str = std::wstring(links[i].begin(), links[i].end());
+		const wchar_t* w_chars = w_str.c_str();
+
+		auto link = ref new Platform::String(w_chars);
+		auto btnH = ref new Windows::UI::Xaml::Controls::HyperlinkButton;
+		btnH->NavigateUri = ref new Windows::Foundation::Uri(link);
+		btnH->Content = link;
+		stkPnl->Children->Append(btnH);
+		counter++;
+		i--;
+	}
+	return hS[0];
+}
+
+void Browser::routeHistory(Platform::String^ s, Windows::UI::Xaml::Controls::WebView^ oBox) {
+	auto uriHist = ref new Windows::Foundation::Uri(s);
+	oBox->Navigate(uriHist);
 }

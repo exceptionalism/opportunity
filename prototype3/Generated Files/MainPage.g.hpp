@@ -83,6 +83,23 @@ void ::prototype3::MainPage::Connect(int __connectionId, ::Platform::Object^ __t
         break;
     case 9:
         {
+            this->hisHolder = safe_cast<::Windows::UI::Xaml::Controls::Grid^>(__target);
+        }
+        break;
+    case 10:
+        {
+            this->historyList = safe_cast<::Windows::UI::Xaml::Controls::StackPanel^>(__target);
+        }
+        break;
+    case 11:
+        {
+            ::Windows::UI::Xaml::Controls::TextBlock^ element11 = safe_cast<::Windows::UI::Xaml::Controls::TextBlock^>(__target);
+            (safe_cast<::Windows::UI::Xaml::Controls::TextBlock^>(element11))->Tapped += ref new ::Windows::UI::Xaml::Input::TappedEventHandler(this, (void (::prototype3::MainPage::*)
+                (::Platform::Object^, ::Windows::UI::Xaml::Input::TappedRoutedEventArgs^))&MainPage::TextBlock_Tapped);
+        }
+        break;
+    case 12:
+        {
             this->homeSearchBox = safe_cast<::Windows::UI::Xaml::Controls::TextBox^>(__target);
             (safe_cast<::Windows::UI::Xaml::Controls::TextBox^>(this->homeSearchBox))->KeyDown += ref new ::Windows::UI::Xaml::Input::KeyEventHandler(this, (void (::prototype3::MainPage::*)
                 (::Platform::Object^, ::Windows::UI::Xaml::Input::KeyRoutedEventArgs^))&MainPage::TextBox_KeyDown);

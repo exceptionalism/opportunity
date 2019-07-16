@@ -16,6 +16,7 @@ namespace Windows {
                 ref class ProgressRing;
                 ref class WebView;
                 ref class StackPanel;
+                ref class Grid;
             }
         }
     }
@@ -44,6 +45,8 @@ namespace prototype3
         private: ::Windows::UI::Xaml::Controls::ProgressRing^ loaderRing;
         private: ::Windows::UI::Xaml::Controls::WebView^ outputBox;
         private: ::Windows::UI::Xaml::Controls::StackPanel^ homeScreen;
+        private: ::Windows::UI::Xaml::Controls::Grid^ hisHolder;
+        private: ::Windows::UI::Xaml::Controls::StackPanel^ historyList;
         private: ::Windows::UI::Xaml::Controls::TextBox^ homeSearchBox;
     };
 }

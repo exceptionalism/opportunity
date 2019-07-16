@@ -78,6 +78,11 @@
             Margin="0,42,0,0" VerticalAlignment="Top"
             HorizontalAlignment="Left"
             Visibility="Visible" Background="#BCB8B1" Padding="0, 70, 0, 10">
+            <TextBlock Text="History"
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Right"
+                       Margin="0, 0, 50, 0" Foreground="#444"
+                       Tapped="TextBlock_Tapped"/>
             <Image Source="Assets/SplashScreen.scale-200.png" Width="200" Height="97" />
             <TextBlock Text="OpportunitY" FontSize="48" Foreground="#88256a" HorizontalAlignment="Center" />
             <TextBox
@@ -89,5 +94,16 @@
                 FontSize="14"
                 KeyDown="TextBox_KeyDown"/>
         </StackPanel>
+        <Grid x:Name="hisHolder" Width="1366" MinHeight="666"
+              VerticalAlignment="Top" HorizontalAlignment="Left"
+              Margin="0,42,0,0" Visibility="Collapsed" Background="#BCB8B1">
+            <TextBlock Text="History" Margin="0, 10, 0, 0"
+                       FontSize="36" HorizontalAlignment="Center"/>
+            <StackPanel 
+                x:Name="historyList"
+                Margin="0, 100, 0, 0"
+                HorizontalAlignment="Center"
+                Width="500"></StackPanel>
+        </Grid>
     </Grid>
 </Page>

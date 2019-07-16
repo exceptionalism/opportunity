@@ -12,6 +12,7 @@ public:
 	bool navigationHasFailed;
 	bool isReloading;
 	bool homeScreenOpen;
+	int histCount;
 
 	int saveFile(Platform::String^);
 	Browser();//done
@@ -22,6 +23,9 @@ public:
 	void loadPrevUrl(Windows::UI::Xaml::Controls::WebView^ webView, Windows::Foundation::Uri^ prevUrl); //done
 	int isValidUrl(Platform::String^ urlString); //done
 	void loadUrlSearch(Windows::UI::Xaml::Controls::WebView^ webView, Platform::String^ toSearch);//done
+	Windows::UI::Xaml::Controls::TextBlock^ processHistory(Platform::String^, Windows::UI::Xaml::Controls::StackPanel^, Windows::UI::Xaml::Controls::WebView^);
+
+	void routeHistory(Platform::String^, Windows::UI::Xaml::Controls::WebView^);
 
 	~Browser();
 };
