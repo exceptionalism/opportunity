@@ -208,6 +208,11 @@ void prototype3::MainPage::HomeButton_Click(Platform::Object^ sender, Windows::U
 			});
 	urlContainer->Text = "";
 	b.homeScreenOpen = true;
+	reloadButton->Content = "R";
+	loaderRing->IsActive = false;
+	loaderRing->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
+	b.isLoading = false;
+	outputBox->Stop();
 	outputBox->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
 	homeScreen->Visibility = Windows::UI::Xaml::Visibility::Visible;
 	hisHolder->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
