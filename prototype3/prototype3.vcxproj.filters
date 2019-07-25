@@ -187,6 +187,7 @@
     <None Include="Assets\404.html" />
     <None Include="Assets\styles.css" />
     <None Include="Assets\cannotConnect.html" />
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="MainPage.xaml" />

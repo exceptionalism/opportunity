@@ -149,16 +149,28 @@ void prototype3::MainPage::OutputBox_NavigationFailed(Platform::Object^ sender, 
 	b.navigationHasFailed = true;
 	loaderRing->IsActive = false;
 	loaderRing->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
+
+	// check if there is any url associating with the event
 	if (e->Uri) {
-		if (e->WebErrorStatus == WebErrorStatus::CannotConnect || e->WebErrorStatus == WebErrorStatus::NotFound || e->WebErrorStatus == WebErrorStatus::UnexpectedStatusCode || e->WebErrorStatus == WebErrorStatus::ConnectionAborted || e->WebErrorStatus == WebErrorStatus::ConnectionReset || e->WebErrorStatus == WebErrorStatus::Disconnected || e->WebErrorStatus == WebErrorStatus::Forbidden) {
+		// check what kind of url has appeared
+		if (e->WebErrorStatus == WebErrorStatus::CannotConnect ||
+			e->WebErrorStatus == WebErrorStatus::NotFound ||
+			e->WebErrorStatus == WebErrorStatus::UnexpectedStatusCode ||
+			e->WebErrorStatus == WebErrorStatus::ConnectionAborted ||
+			e->WebErrorStatus == WebErrorStatus::ConnectionReset ||
+			e->WebErrorStatus == WebErrorStatus::Disconnected ||
+			e->WebErrorStatus == WebErrorStatus::Forbidden) {
+			// prepare url for local html file access
 			auto error404 = ref new Windows::Foundation::Uri("ms-appx-web:///Assets/404.html");
 			outputBox->Navigate(error404);
 		}
 		else {
+			// display the error code in pop-up message in case the error cannot be determined
 			auto d = ref new Windows::UI::Popups::MessageDialog(e->WebErrorStatus.ToString());
 			d->ShowAsync();
 		}
 	}
+
 	b.directLoading = false;
 	b.isReloading = false;
 }
@@ -179,12 +191,12 @@ void prototype3::MainPage::UrlContainer_KeyDown(Platform::Object^ sender, Window
 				auto urlToLoad = ref new Windows::Foundation::Uri(urlContainer->Text);
 				b.loadUrlDirect(outputBox, urlToLoad);
 			}
-			else if (i == 0) {
-				b.loadUrlSearch(outputBox, urlContainer->Text);
-			}
 			else if (i == -1) {
 				auto urlToGo = ref new Windows::Foundation::Uri("http://" + urlContainer->Text);
 				b.loadUrlDirect(outputBox, urlToGo);
+			}
+			else if (i == 0) {
+				b.loadUrlSearch(outputBox, urlContainer->Text);
 			}
 		}
 	}

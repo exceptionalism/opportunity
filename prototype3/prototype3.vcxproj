@@ -206,6 +206,7 @@
     <None Include="Assets\styles.css">
       <DeploymentContent>true</DeploymentContent>
     </None>
+    <None Include="ClassDiagram.cd" />
     <None Include="prototype3_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>

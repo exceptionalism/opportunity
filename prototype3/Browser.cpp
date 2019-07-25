@@ -81,6 +81,7 @@ void Browser::loadUrlSearch(Windows::UI::Xaml::Controls::WebView^ webView, Platf
 		dialog->ShowAsync();
 	}
 }
+
 int Browser::isValidUrl(Platform::String^ urlString) {
 	std::wstring fooW(urlString->Begin());
 	
@@ -121,7 +122,7 @@ int Browser::isValidUrl(Platform::String^ urlString) {
 
 
 Windows::UI::Xaml::Controls::TextBlock^ Browser::processHistory(Platform::String^ hDt, Windows::UI::Xaml::Controls::StackPanel^ stkPnl, Windows::UI::Xaml::Controls::WebView^ oB) {
-	Windows::UI::Xaml::Controls::TextBlock^ hS[300];
+	Windows::UI::Xaml::Controls::TextBlock^ hS[500];
 	std::string links[100];
 	int i = 0;
 	std::wstring fooW(hDt->Begin());
@@ -152,9 +153,4 @@ Windows::UI::Xaml::Controls::TextBlock^ Browser::processHistory(Platform::String
 		i--;
 	}
 	return hS[0];
-}
-
-void Browser::routeHistory(Platform::String^ s, Windows::UI::Xaml::Controls::WebView^ oBox) {
-	auto uriHist = ref new Windows::Foundation::Uri(s);
-	oBox->Navigate(uriHist);
 }

@@ -84,7 +84,7 @@
                        Margin="0, 0, 50, 0" Foreground="#444"
                                                 />
             <Image Source="Assets/SplashScreen.scale-200.png" Width="200" Height="97" />
-            <TextBlock Text="OpportunitY" FontSize="48" Foreground="#88256a" HorizontalAlignment="Center" />
+            <TextBlock Text="Opportunity" FontSize="48" Foreground="#88256a" HorizontalAlignment="Center" />
             <TextBox x:ConnectionId='12'
                 x:Name="homeSearchBox"
                 Text=""

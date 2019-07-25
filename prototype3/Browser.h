@@ -24,9 +24,6 @@ public:
 	int isValidUrl(Platform::String^ urlString); //done
 	void loadUrlSearch(Windows::UI::Xaml::Controls::WebView^ webView, Platform::String^ toSearch);//done
 	Windows::UI::Xaml::Controls::TextBlock^ processHistory(Platform::String^, Windows::UI::Xaml::Controls::StackPanel^, Windows::UI::Xaml::Controls::WebView^);
-
-	void routeHistory(Platform::String^, Windows::UI::Xaml::Controls::WebView^);
-
 	~Browser();
 };
 
